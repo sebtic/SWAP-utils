@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+ <parent>
+  <artifactId>utils</artifactId>
+  <groupId>org.projectsforge</groupId>
+  <version>0.7</version>
+ </parent>
+
+ <modelVersion>4.0.0</modelVersion>
+ <groupId>org.projectsforge.utils</groupId>
+ <artifactId>meta.api</artifactId>
+ <name>The API metaheuristic</name>
+ <packaging>jar</packaging>
+
+ <dependencies>
+  <dependency>
+   <groupId>org.slf4j</groupId>
+   <artifactId>slf4j-api</artifactId>
+  </dependency>
+  <dependency>
+   <groupId>org.projectsforge.utils</groupId>
+   <artifactId>events</artifactId>
+  </dependency>
+  <dependency>
+   <groupId>org.projectsforge.utils</groupId>
+   <artifactId>tasksexecutors</artifactId>
+  </dependency>
+ </dependencies>
+</project>
