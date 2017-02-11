@@ -21,6 +21,8 @@ build_job:
     - master
   script:
     - mvn --batch-mode compile -Dmaven.test.skip=true -Djacoco.skip=true -Dmaven.javadoc.skip=true -Dmaven.source.skip=true
+  tags:
+    - docker
 
 # build of the current branch state applied on latest state of the master branch
 build_merge_job:
@@ -33,6 +35,8 @@ build_merge_job:
     - git config user.name "GitLab CI"
     - git merge origin master --no-commit --no-ff
     - mvn --batch-mode compile -Dmaven.test.skip=true -Djacoco.skip=true -Dmaven.javadoc.skip=true -Dmaven.source.skip=true
+  tags:
+    - docker
 
 # deploy master (should be a SNAPSHOT)
 deploy_job:
@@ -41,6 +45,8 @@ deploy_job:
     - master
   script:
     - mvn --batch-mode deploy -Dmaven.test.skip=true -Djacoco.skip=true
+  tags:
+    - docker
 
 # deploy a tag as a release
 deploy_tags_job:
@@ -50,6 +56,8 @@ deploy_tags_job:
   script:
     - mvn --batch-mode org.codehaus.mojo:versions-maven-plugin:2.1:set -DnewVersion=$CI_BUILD_TAG -DgenerateBackupPoms=false
     - mvn --batch-mode clean deploy -Dmaven.test.skip=true -Djacoco.skip=true 
+  tags:
+    - docker
 
 
 
