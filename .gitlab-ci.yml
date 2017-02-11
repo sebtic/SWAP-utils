@@ -1,0 +1,56 @@
+image: projectsforge/ubuntu-16.04-java8-oracle
+tags: docker
+
+stages:
+  - build
+  - test
+  - deploy
+
+before_script:
+  # remove any previously deployed artifact
+  - rm -rf /home/user/.m2/repository/org/projectsforge/
+  - mkdir -p ~/.ssh
+  - ssh-keyscan -p 2223 static.projectsforge.org > ~/.ssh/known_hosts
+  - eval $(ssh-agent -s)
+  - echo "$SSH_PRIVATE_KEY" | ssh-add - 
+
+# build of master
+build_job:
+  stage: build
+  only:
+    - master
+  script:
+    - mvn --batch-mode compile -Dmaven.test.skip=true -Djacoco.skip=true -Dmaven.javadoc.skip=true -Dmaven.source.skip=true
+
+# build of the current branch state applied on latest state of the master branch
+build_merge_job:
+  stage: build
+  except:
+    - master
+    - tags
+  script:
+    - git config user.email "gitlab@projectsforge.org"
+    - git config user.name "GitLab CI"
+    - git merge origin master --no-commit --no-ff
+    - mvn --batch-mode compile -Dmaven.test.skip=true -Djacoco.skip=true -Dmaven.javadoc.skip=true -Dmaven.source.skip=true
+
+# deploy master (should be a SNAPSHOT)
+deploy_job:
+  stage: deploy
+  only:
+    - master
+  script:
+    - mvn --batch-mode deploy -Dmaven.test.skip=true -Djacoco.skip=true
+
+# deploy a tag as a release
+deploy_tags_job:
+  stage: deploy
+  only:
+    - tags
+  script:
+    - mvn --batch-mode org.codehaus.mojo:versions-maven-plugin:2.1:set -DnewVersion=$CI_BUILD_TAG -DgenerateBackupPoms=false
+    - mvn --batch-mode clean deploy -Dmaven.test.skip=true -Djacoco.skip=true 
+
+
+
+
