@@ -172,7 +172,7 @@
 		</repository>
 		<snapshotRepository>
 			<id>ssh-repository</id>
-			<url>scpexe://maven@static.projectsforge.org:2223/maven/</url>
+			<url>sftp://maven@static.projectsforge.org:2223/maven/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -187,10 +187,6 @@
 		</extensions>
 
 		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>wagon-maven-plugin</artifactId>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
