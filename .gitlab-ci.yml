@@ -1,4 +1,4 @@
-image: projectsforge/basebuild
+image: projectsforge/buildbase
 
 stages:
   - build
