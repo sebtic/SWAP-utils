@@ -8,6 +8,7 @@ stages:
 before_script:
   - sdkw install java
   - sdkw install maven
+  - source /etc/profile
   # remove any previously deployed artifact
   - rm -rf /home/user/.m2/repository/org/projectsforge/
   - mkdir -p ~/.ssh
